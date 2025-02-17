@@ -1,0 +1,123 @@
+#include <stdio.h>
+
+struct student {
+    int roll_no;
+    char name[50];
+    int marks;
+} s[10];
+
+int num = 0; // Global variable to track the number of students.
+
+void insertstudent() {
+    int n ;
+    printf("Enter the number of student to insert:") ;
+    scanf("%d",&n) ;
+    
+    printf("\nDetails of the student\n");
+    for(int i=0;i<n;i++){
+    printf("\nEnter the Details of Student %d\n", num + 1);
+    printf("Enter the Roll No: ");
+    scanf("%d", &s[num].roll_no);
+    printf("Enter the Name: ");
+    scanf("%s", s[num].name);
+    printf("Enter the Marks: ");
+    scanf("%d", &s[num].marks) ;
+    num++; 
+    }
+    printf("\nStudent Record Inserted Successfully.\n");
+}
+
+void deletestudent(int roll_no) {
+    int i, found = 0;
+    for (i = 0; i < num; i++) {
+        if (s[i].roll_no == roll_no) {
+            found = 1;
+            for (int j = i; j < num - 1; j++) {
+                s[j] = s[j + 1];
+            }
+            num--;  // Reduce the count
+            printf("Student Record Deleted Successfully.\n");
+        }
+    }
+    if (s[i].roll_no != roll_no) {
+        printf("Student with Roll No %d not found.\n", roll_no);
+    }
+}
+
+void modifystudent(int roll_no) {
+    int i,choice, found = 0;
+    for (i = 0; i < num; i++) {
+        if (s[i].roll_no == roll_no) {
+            printf("\nWhat do you want to modify?\n");
+            printf("1.Name\n2.Marks\n");
+            printf("Enter your choice:");
+            scanf("%d",&choice);
+            
+            switch(choice) {
+                case 1: 
+                    printf("Enter the new name: ");
+                    scanf("%s", s[i].name);
+                    printf("Name Updated Sucessfully!") ;
+                    break ;
+                case 2:
+                    printf("Enter the new marks: ");
+                    scanf("%d", &s[i].marks);
+                    printf("Marks Updated Sucessfully!") ;
+                    break ;
+                default :
+                    printf("Invalid Choice.") ;
+            }
+            break ;
+        }
+    }
+    if (s[i].roll_no != roll_no) {
+        printf("Student with Roll No %d not found.\n", roll_no);
+    }
+}
+
+void displaystudent() {
+    if (num == 0) {
+        printf("No students to display.\n");
+        return;
+    }
+
+    printf("Roll No\t Name\t Marks\n");
+    for (int i = 0; i < num; i++) {
+        printf("%d\t %s\t %d\n", s[i].roll_no, s[i].name, s[i].marks);
+    }
+}
+
+int main() {
+    int choice, roll_no;
+    while (1) {
+        printf("\n1. Insert Student\n2. Delete Student\n3. Modify Student\n4. Display Student\n5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                insertstudent();
+                break;
+            case 2:
+                printf("Enter the Roll No of the student to delete: ");
+                scanf("%d", &roll_no);
+                deletestudent(roll_no);
+                break;
+            case 3:
+                printf("Enter the Roll No of the student to modify: ");
+                scanf("%d", &roll_no);
+                modifystudent(roll_no);
+                break;
+            case 4:
+                displaystudent();
+                break;
+            case 5:
+                printf("Exiting the program.\n");
+                return 0;  // Exit the loop
+            default:
+                printf("Invalid choice. Please try again.\n");
+                break;
+        }
+    }
+    return 0 ;
+}
