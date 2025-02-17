@@ -6,7 +6,7 @@ struct student {
     int marks;
 } s[10];
 
-int num = 0; // Global variable to track the number of students.
+int num = 0;
 
 void insertstudent() {
     int n ;
@@ -35,7 +35,7 @@ void deletestudent(int roll_no) {
             for (int j = i; j < num - 1; j++) {
                 s[j] = s[j + 1];
             }
-            num--;  // Reduce the count
+            num--; 
             printf("Student Record Deleted Successfully.\n");
         }
     }
@@ -113,7 +113,7 @@ int main() {
                 break;
             case 5:
                 printf("Exiting the program.\n");
-                return 0;  // Exit the loop
+                return 0;  
             default:
                 printf("Invalid choice. Please try again.\n");
                 break;
