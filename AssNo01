@@ -31,16 +31,16 @@ void insertbook() {
 }
 
 void deletebook(int ID) {
-    int i, found = 0;
+    int i;
     for (i = 0; i < num; i++) {
         if (b[i].ID == ID) {
-            found = 1;
             for (int j = i; j < num - 1; j++) {
                 b[j] = b[j + 1];
             }
             num--;  // Reduce the count
             printf("Books Record Deleted Successfully.\n");
         }
+  break ;
     }
     if (b[i].ID != ID) {
         printf("Book with ID %d not found.\n", ID);
