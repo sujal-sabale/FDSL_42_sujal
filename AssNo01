@@ -102,7 +102,7 @@ void displaybook() {
 
 int main() {
     int choice, ID;
-    while (1) {
+    while (choice != 5) {
         printf("\n1. Insert Book\n2. Delete Book\n3. Modify Book\n4. Display Book\n5. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
