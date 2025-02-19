@@ -68,7 +68,8 @@ void modifybook(int ID) {
                     printf("Name Updated Sucessfully!") ;
                     break ;
                  case 3: 
-                     printf("Enter the book author:");                     scanf("%s",b[i].author);
+                     printf("Enter the book author:");     
+                     scanf("%s",b[i].author);
                      printf("Author Updated Successfully!") ;
                      break ;
                 case 4:
