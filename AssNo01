@@ -1,68 +1,80 @@
 #include <stdio.h>
 
-struct student {
-    int roll_no;
+struct book {
+    int ID;
     char name[50];
-    int marks;
-} s[10];
+    char author[50] ;
+    int price;
+} b[10];
 
-int num = 0;
+int num = 0; 
 
-void insertstudent() {
+void insertbook() {
     int n ;
-    printf("Enter the number of student to insert:") ;
+    printf("Enter the number of Books to insert:") ;
     scanf("%d",&n) ;
     
-    printf("\nDetails of the student\n");
+    printf("\nDetails of the Books\n");
     for(int i=0;i<n;i++){
-    printf("\nEnter the Details of Student %d\n", num + 1);
-    printf("Enter the Roll No: ");
-    scanf("%d", &s[num].roll_no);
+    printf("\nEnter the Details of Book %d\n", num + 1);
+    printf("Enter the ID: ");
+    scanf("%d", &b[num].ID);
     printf("Enter the Name: ");
-    scanf("%s", s[num].name);
-    printf("Enter the Marks: ");
-    scanf("%d", &s[num].marks) ;
+    scanf("%s", b[num].name);
+    printf("Enter the Author:");
+    scanf("%s",b[num].author);
+    printf("Enter the Price: ");
+    scanf("%d", &b[num].price) ;
     num++; 
     }
-    printf("\nStudent Record Inserted Successfully.\n");
+    printf("\nBooks Record Inserted Successfully.\n");
 }
 
-void deletestudent(int roll_no) {
+void deletebook(int ID) {
     int i, found = 0;
     for (i = 0; i < num; i++) {
-        if (s[i].roll_no == roll_no) {
+        if (b[i].ID == ID) {
             found = 1;
             for (int j = i; j < num - 1; j++) {
-                s[j] = s[j + 1];
+                b[j] = b[j + 1];
             }
-            num--; 
-            printf("Student Record Deleted Successfully.\n");
+            num--;  // Reduce the count
+            printf("Books Record Deleted Successfully.\n");
         }
     }
-    if (s[i].roll_no != roll_no) {
-        printf("Student with Roll No %d not found.\n", roll_no);
+    if (b[i].ID != ID) {
+        printf("Book with ID %d not found.\n", ID);
     }
 }
 
-void modifystudent(int roll_no) {
+void modifybook(int ID) {
     int i,choice, found = 0;
     for (i = 0; i < num; i++) {
-        if (s[i].roll_no == roll_no) {
+        if (b[i].ID == ID) {
             printf("\nWhat do you want to modify?\n");
-            printf("1.Name\n2.Marks\n");
+            printf("1.Book ID\n2.Name\n3.Author\n4.Price\n");
             printf("Enter your choice:");
             scanf("%d",&choice);
             
             switch(choice) {
-                case 1: 
-                    printf("Enter the new name: ");
-                    scanf("%s", s[i].name);
+                case 1:
+                    printf("Enter the New Book ID:");
+                    scanf("%d",&b[i].ID) ;
+                    printf("Book ID Updated Successfully!");
+                    break ;
+                case 2: 
+                    printf("Enter the new book name: ");
+                    scanf("%s", b[i].name);
                     printf("Name Updated Sucessfully!") ;
                     break ;
-                case 2:
-                    printf("Enter the new marks: ");
-                    scanf("%d", &s[i].marks);
-                    printf("Marks Updated Sucessfully!") ;
+                 case 3: 
+                     printf("Enter the book author:");                     scanf("%s",b[i].author);
+                     printf("Author Updated Successfully!") ;
+                     break ;
+                case 4:
+                    printf("Enter the new price: ");
+                    scanf("%d", &b[i].price);
+                    printf("Price Updated Sucessfully!") ;
                     break ;
                 default :
                     printf("Invalid Choice.") ;
@@ -70,50 +82,50 @@ void modifystudent(int roll_no) {
             break ;
         }
     }
-    if (s[i].roll_no != roll_no) {
-        printf("Student with Roll No %d not found.\n", roll_no);
+    if (b[i].ID != ID) {
+        printf("Book with ID %d not found.\n", ID);
     }
 }
 
-void displaystudent() {
+void displaybook() {
     if (num == 0) {
-        printf("No students to display.\n");
+        printf("No Book to display.\n");
         return;
     }
 
-    printf("Roll No\t Name\t Marks\n");
+    printf("ID\t Name\t Author\tPrice\n");
     for (int i = 0; i < num; i++) {
-        printf("%d\t %s\t %d\n", s[i].roll_no, s[i].name, s[i].marks);
+        printf("%d\t %s\t %s\t%d\n", b[i].ID, b[i].name, b[i].author, b[i].price);
     }
 }
 
 int main() {
-    int choice, roll_no;
+    int choice, ID;
     while (1) {
-        printf("\n1. Insert Student\n2. Delete Student\n3. Modify Student\n4. Display Student\n5. Exit\n");
+        printf("\n1. Insert Book\n2. Delete Book\n3. Modify Book\n4. Display Book\n5. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
         switch (choice) {
             case 1:
-                insertstudent();
+                insertbook();
                 break;
             case 2:
-                printf("Enter the Roll No of the student to delete: ");
-                scanf("%d", &roll_no);
-                deletestudent(roll_no);
+                printf("Enter the ID of the Book to delete: ");
+                scanf("%d", &ID);
+                deletebook(ID);
                 break;
             case 3:
-                printf("Enter the Roll No of the student to modify: ");
-                scanf("%d", &roll_no);
-                modifystudent(roll_no);
+                printf("Enter the ID of the Book to modify: ");
+                scanf("%d", &ID);
+                modifybook(ID);
                 break;
             case 4:
-                displaystudent();
+                displaybook();
                 break;
             case 5:
                 printf("Exiting the program.\n");
-                return 0;  
+                // Exit the loop
             default:
                 printf("Invalid choice. Please try again.\n");
                 break;
