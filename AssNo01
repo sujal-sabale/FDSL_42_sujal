@@ -51,6 +51,7 @@ void modifybook(int ID) {
     int i,choice, found = 0;
     for (i = 0; i < num; i++) {
         if (b[i].ID == ID) {
+            found = 1 ;
             printf("\nWhat do you want to modify?\n");
             printf("1.Book ID\n2.Name\n3.Author\n4.Price\n");
             printf("Enter your choice:");
@@ -60,26 +61,27 @@ void modifybook(int ID) {
                 case 1:
                     printf("Enter the New Book ID:");
                     scanf("%d",&b[i].ID) ;
-                    printf("Book ID Updated Successfully!");
+                    printf("Book ID Updated Successfully!\n");
                     break ;
                 case 2: 
                     printf("Enter the new book name: ");
                     scanf("%s", b[i].name);
-                    printf("Name Updated Sucessfully!") ;
+                    printf("Name Updated Sucessfully!\n") ;
                     break ;
                  case 3: 
                      printf("Enter the book author:");     
                      scanf("%s",b[i].author);
-                     printf("Author Updated Successfully!") ;
+                     printf("Author Updated Successfully!\n") ;
                      break ;
                 case 4:
                     printf("Enter the new price: ");
                     scanf("%d", &b[i].price);
-                    printf("Price Updated Sucessfully!") ;
+                    printf("Price Updated Sucessfully!\n") ;
                     break ;
                 default :
-                    printf("Invalid Choice.") ;
+                    printf("Invalid Choice.\n") ;
             }
+            break ;
         }
     }
     if (!found) {
