@@ -1,0 +1,101 @@
+#include <stdio.h>
+
+struct employ_info {
+    int ID;
+    char name[20];
+    int salary;
+} e[10];
+
+int n;
+
+void insert() {
+    int i;
+
+    printf("How many Employees work in your company?");
+    scanf("%d", &n);
+
+    printf("Enter the Details\n");
+    for (i = 0; i < n; i++) {
+        printf("Enter ID:");
+        scanf("%d", &e[i].ID);
+        printf("Enter the Name:");
+        scanf("%s", e[i].name);
+        printf("Enter the Salary:");
+        scanf("%d", &e[i].salary);
+    }
+    printf("Details Inserted Successfully!\n");
+}
+
+void idsort() {
+    int i, j;
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - (1 - i); j++) {
+            if (e[j].ID > e[j + 1].ID) {
+                struct employ_info temp = e[j];
+                e[j] = e[j + 1];
+                e[j + 1] = temp;
+            }
+        }
+    }
+    printf("ID is sorted successfully!\n");
+}
+
+void salary_sort() {
+    int i, j;
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - (1 - i); j++) {
+            if (e[j].salary > e[j + 1].salary) {
+                struct employ_info temp = e[j];
+                e[j] = e[j + 1];
+                e[j + 1] = temp;
+            }
+        }
+    }
+    printf("Salary is sorted successfully!\n");
+}
+
+void display() {
+    int i;
+    printf("ID\tName\tSalary\n") ;
+    for (i = 0; i < n; i++) {
+        printf("%d\t%s\t%d\n",e[i].ID,e[i].name,e[i].salary) ;
+    }
+}
+
+int main() {
+    int choice = 0;
+
+while (choice != 5) {
+printf("1. Insert Details\n2. Sort by ID\n3. Sort by Salary\n4. Display Details\n5. Exit program\n");
+
+printf("Enter your choice:\n");
+scanf("%d", &choice);
+
+switch (choice) {
+case 1:
+       insert();
+       break;
+
+case 2:
+       idsort();
+       break;
+
+case 3:
+       salary_sort();
+       break;
+
+case 4:
+      display();
+      break;
+
+case 5:
+      printf("\nExiting the program!\n");
+      break;
+
+default:
+       printf("Invalid choice\n");
+        }
+    }
+
+    return 0;
+}
