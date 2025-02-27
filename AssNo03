@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 struct student {
     int roll_no;
@@ -17,7 +18,7 @@ void insert_student() {
         printf("Enter Student Roll No.: ");
         scanf("%d", &s[i].roll_no);
         printf("Enter Student Name: ");
-        scanf("%s", s[i].name); 
+        scanf(" %[^\n]s", s[i].name);  // Fixed input for names with spaces
         printf("Enter the Marks: ");
         scanf("%d", &s[i].marks);
     }
@@ -26,30 +27,44 @@ void insert_student() {
 
 void rollno_sort() {
     for (int i = 0; i < n - 1; i++) {
-        int smallestIdx = i ;
-        for (int j = i+1; j < n ; j++) {
+        int smallestIdx = i;
+        for (int j = i + 1; j < n; j++) {
             if (s[j].roll_no < s[smallestIdx].roll_no) { 
-               smallestIdx = j ;
+                smallestIdx = j;
             }
         }
-                struct student temp = s[i];
-                s[i] = s[smallestIdx];
-                s[smallestIdx] = temp;
+        struct student temp = s[i];
+        s[i] = s[smallestIdx];
+        s[smallestIdx] = temp;
     }
     printf("\nRoll No Sorted Successfully!\n");
 }
 
-void marks_sort() {
+void name_sort() {
+    struct student temp;
     for (int i = 0; i < n - 1; i++) {
-           int smallestIdx= i ;
         for (int j = i + 1; j < n; j++) {
-            if (s[j].marks < s[smallestIdx].marks) { 
-                smallestIdx = j  ;
+            if (strcmp(s[j].name, s[i].name) < 0) {  // Fixed comparison
+                temp = s[i];
+                s[i] = s[j];
+                s[j] = temp;
             }
         }
-                struct student temp = s[i];
-                s[i] = s[smallestIdx];
-                s[smallestIdx] = temp;
+    }
+    printf("\nName Sorted Successfully!\n");
+}
+
+void marks_sort() {
+    for (int i = 0; i < n - 1; i++) {
+        int smallestIdx = i;
+        for (int j = i + 1; j < n; j++) {
+            if (s[j].marks < s[smallestIdx].marks) { 
+                smallestIdx = j;
+            }
+        }
+        struct student temp = s[i];
+        s[i] = s[smallestIdx];
+        s[smallestIdx] = temp;
     }
     printf("\nMarks Sorted Successfully!\n");
 }
@@ -63,9 +78,9 @@ void display() {
 
 int main() {
     int choice = 0;
-    while (choice != 5) {
+    while (choice != 6) {
         printf("\n------ Sorted Details ------\n");
-        printf("1. Insert Details\n2. Sort Roll No\n3. Sort Marks\n4. Display Details\n5. Exit program\n");
+        printf("1. Insert Details\n2. Sort Roll No\n3. Sort Name\n4. Sort Marks\n5. Display Details\n6. Exit program\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -77,12 +92,15 @@ int main() {
                 rollno_sort();
                 break;
             case 3:
-                marks_sort();
+                name_sort();
                 break;
             case 4:
-                display();
+                marks_sort();
                 break;
             case 5:
+                display();
+                break;
+            case 6:
                 printf("\nExit the program!\n");
                 break;
             default:
