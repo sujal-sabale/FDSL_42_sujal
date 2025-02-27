@@ -18,7 +18,7 @@ void insert_student() {
         printf("Enter Student Roll No.: ");
         scanf("%d", &s[i].roll_no);
         printf("Enter Student Name: ");
-        scanf(" %[^\n]s", s[i].name);  // Fixed input for names with spaces
+        scanf(" %[^\n]s", s[i].name);  
         printf("Enter the Marks: ");
         scanf("%d", &s[i].marks);
     }
