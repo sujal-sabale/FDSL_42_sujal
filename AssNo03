@@ -26,7 +26,7 @@ void insert_student() {
 
 void rollno_sort() {
     for (int i = 0; i < n - 1; i++) {
-           int smallestIdx = i ;
+        int smallestIdx = i ;
         for (int j = i+1; j < n ; j++) {
             if (s[j].roll_no < s[smallestIdx].roll_no) { 
                smallestIdx = j ;
