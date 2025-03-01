@@ -1,0 +1,189 @@
+#include <stdio.h>
+#include <string.h>
+
+struct student {
+    int roll_no;
+    char name[50];
+    int marks;
+} s[10];
+
+int n;
+
+void insert_student() {
+    printf("How many students record you have to insert? ");
+    scanf("%d", &n);
+    printf("Enter the Details:\n");
+
+    for (int i = 0; i < n; i++) {
+        printf("Enter Student Roll No.: ");
+        scanf("%d", &s[i].roll_no);
+        printf("Enter Student Name: ");
+        scanf(" %[^\n]s", s[i].name); 
+        printf("Enter the Marks: ");
+        scanf("%d", &s[i].marks);
+    }
+    printf("Details Inserted Successfully\n");
+}
+
+void rollno_selection_sort() {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (s[j].roll_no < s[i].roll_no) {  
+                struct student temp = s[i];
+                s[i] = s[j];
+                s[j] = temp;
+            }
+        }
+    }
+    printf("\nRoll No Sorted Successfully using Selection Sort!\n");
+}
+
+void rollno_bubble_sort() {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (s[j].roll_no > s[j + 1].roll_no) {  
+                struct student temp = s[j];
+                s[j] = s[j + 1];
+                s[j + 1] = temp;
+            }
+        }
+    }
+    printf("\nRoll No Sorted Successfully using Bubble Sort!\n");
+}
+
+void name_selection_sort() {
+    struct student temp;
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (strcmp(s[j].name, s[i].name) < 0) {  
+                temp = s[i];
+                s[i] = s[j];
+                s[j] = temp;
+            }
+        }
+    }
+    printf("\nName Sorted Successfully using Selection Sort!\n");
+}
+
+void name_bubble_sort() {
+    struct student temp;
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (strcmp(s[j].name, s[j + 1].name) > 0) {  
+                temp = s[j];
+                s[j] = s[j + 1];
+                s[j + 1] = temp;
+            }
+        }
+    }
+    printf("\nName Sorted Successfully using Bubble Sort!\n");
+}
+
+void marks_selection_sort() {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (s[j].marks < s[i].marks) {  
+                struct student temp = s[i];
+                s[i] = s[j];
+                s[j] = temp;
+            }
+        }
+    }
+    printf("\nMarks Sorted Successfully using Selection Sort!\n");
+}
+
+void marks_bubble_sort() {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (s[j].marks < s[j + 1].marks) { 
+                struct student temp = s[j];
+                s[j] = s[j + 1];
+                s[j + 1] = temp;
+            }
+        }
+    }
+    printf("\nMarks Sorted Successfully using Bubble Sort!\n");
+}
+
+void display() {
+    printf("\nRoll No\tName\tMarks\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d\t%s\t%d\n", s[i].roll_no, s[i].name, s[i].marks);
+    }
+}
+
+int main() {
+    int c, choice = 0;
+    while (choice != 6) {
+        printf("\n------ Sorted Details ------\n");
+        printf("1. Insert Details\n2. Sort Roll No\n3. Sort Name\n4. Sort Marks\n5. Display Details\n6. Exit program\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1:
+                insert_student();
+                break;
+        
+            case 2:
+                printf("1. Bubble Sort.\n2. Selection Sort.\n");
+                printf("Enter your Choice: ");
+                scanf("%d", &c);
+                switch(c) {
+                    case 1:
+                        rollno_bubble_sort();
+                        break;
+                    case 2:
+                        rollno_selection_sort();
+                        break;
+                    default:
+                        printf("Wrong Choice\n");
+                }
+                break;
+        
+            case 3:
+                printf("1. Bubble Sort.\n2. Selection Sort.\n");
+                printf("Enter your Choice: ");
+                scanf("%d", &c);
+                switch(c) {
+                    case 1:
+                        name_bubble_sort();
+                        break;
+                    case 2:
+                        name_selection_sort();
+                        break;
+                    default:
+                        printf("Wrong Choice\n");
+                }
+                break;
+            
+            case 4:
+                printf("1. Bubble Sort.\n2. Selection Sort.\n");
+                printf("Enter your Choice: ");
+                scanf("%d", &c);
+                switch(c) {
+                    case 1:
+                        marks_bubble_sort();
+                        break;
+                    case 2:
+                        marks_selection_sort();
+                        break;
+                    default:
+                        printf("Wrong Choice\n");
+                }
+                break;
+            
+            case 5:
+                display();
+                break;
+        
+            case 6:
+                printf("Exit Program...\n");
+                break;
+             
+            default:
+                printf("Wrong Choice! Please try again.\n");
+        }
+    }
+    return 0;
+}
