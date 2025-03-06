@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    int n, i, j, temp;
+    
+    printf("Enter Size of Array: ");
+    scanf("%d", &n);
+
+    int roll_no[n];
+    char name[50], tempName[50];
+
+    printf("Enter The Roll Numbers: ");
+    for(i = 0; i < n; i++) {
+        scanf("%d", &roll_no[i]);
+    }
+    
+    printf("Enter the Names of %d Students: \n", n);
+    for(i = 0; i < n; i++) {
+        scanf("%s", name[i]);  
+    }
+
+   
+    printf("\nRoll Numbers:\n");
+    for(i = 0; i < n; i++) {
+        printf("Roll_No[%d] = %d\n", i, roll_no[i]);
+    }
+
+  
+    for(i = 0; i < n-1; i++) {
+        for(j = i+1; j < n; j++) {
+            if(roll_no[j] < roll_no[i]) {               
+                temp = roll_no[i];
+                roll_no[i] = roll_no[j];
+                roll_no[j] = temp;
+                
+                
+                strcpy(tempName, name[i]);
+                strcpy(name[i], name[j]);
+                strcpy(name[j], tempName);
+            }
+        }
+    }
+
+    
+    printf("\nSorted Roll Numbers and Names:\n");
+    printf("Roll_No\tName\n");
+    for(i = 0; i < n; i++) {
+        printf("%d\t%s\n", roll_no[i], name[i]);
+    }
+
+    return 0;
+}
