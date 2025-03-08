@@ -1,0 +1,102 @@
+#include <stdio.h>
+
+struct student {
+    int roll_no;
+    int marks;
+}s[10];
+
+int n;
+
+void insert_student() {
+    printf("How many students record you have to insert? ");
+    scanf("%d", &n);
+    printf("Enter the Details:\n");
+
+    for (int i = 0; i < n; i++) {
+        printf("Enter Student Roll No.: ");
+        scanf("%d", &s[i].roll_no);
+        printf("Enter the Marks: ");
+        scanf("%d", &s[i].marks);
+    }
+    printf("Details Inserted Successfully\n");
+}
+
+void rollno_search() {
+   int key, found = 0;  
+    printf("Enter the Roll No which you want to search: ");
+    scanf("%d", &key);
+    
+    for (int i = 0; i < n; i++) {
+        if (s[i].roll_no == key) {
+            found = 1;
+            break;
+        }
+    }
+    
+    for (int i = 0; i < n; i++) {
+        if (found == 1) { 
+            printf("%d Roll No. Found At %d Position.\n", key, i + 1);
+            break; 
+        }
+    }
+    printf("\nRoll No Search Successfully!\n");
+}
+
+void marks_search() {
+   int key, found = 0;  
+    printf("Enter the Marks which you want to search: ");
+    scanf("%d", &key);
+    
+    for (int i = 0; i < n; i++) {
+        if (s[i].marks == key) {
+            found = 1;
+            break;
+        }
+    }
+    
+    for (int i = 0; i < n; i++) {
+        if (found == 1) { 
+            printf("%d Marks Found At %d Position.\n", key, i + 1);
+            break; 
+        }
+    }
+    printf("\nMarks Search Successfully!\n");
+}
+
+void display() {
+    printf("\nRoll_No\tMarks\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d\t%d\n", s[i].roll_no, s[i].marks);
+    }
+}
+
+int main() {
+    int choice = 0;
+    while (choice != 6) {
+        printf("\n------ Sorted Details ------\n");
+        printf("1. Insert Details\n2. Search Roll No\n3. Search Marks\n4. Display Details\n5. Exit program\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                insert_student();
+                break;
+            case 2:
+                rollno_search();
+                break;
+            case 3:
+                marks_search();
+                break;
+            case 4:
+                display();
+                break;
+            case 5:
+                printf("\nExit the program!\n");
+                break;
+            default:
+                printf("Invalid choice\n");
+        }
+    }
+    return 0;
+}
