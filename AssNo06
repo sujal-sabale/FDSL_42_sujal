@@ -1,0 +1,114 @@
+#include <stdio.h>
+
+struct employee {
+int ID ;
+int salary ;
+}e[10] ;
+
+int n;
+
+void insert_empinfo() {
+    printf("How many Employee record you have to insert? ");
+    scanf("%d", &n);
+    printf("Enter the Details:\n");
+
+    for (int i = 0; i < n; i++) {
+        printf("Enter Employee ID: ");
+        scanf("%d", &e[i].ID);
+        printf("Enter the Employee Salary: ");
+        scanf("%d", &e[i].salary);
+    }
+    printf("Details Inserted Successfully\n");
+}
+
+void ID_search() {
+int key ;
+printf("Enter the Employee ID to search:");
+scanf("%d",&key) ;
+
+int low=0, high;
+high = n-1 ;
+int found = 0 ;
+
+while(low<=high){
+int mid=(low+high)/2 ;
+     if(key==e[mid]){
+     printf("ID Found at index:%d",mid);
+     break ;
+     } else if(key<e[mid]){
+     high = mid-1;
+     } else {
+     low = mid+1 ;
+     }
+}
+if(low>high) {
+printf("%d ID NOT found.",key) ;
+}
+printf("\nEmployee ID Search Successfully!\n");
+}
+
+void salary_search() {
+int key ;
+printf("Enter the Employee salary to search:");
+scanf("%d",&key) ;
+
+int low=0, high;
+high = n-1 ;
+int found = 0 ;
+
+while(low<=high){
+int mid=(low+high)/2 ;
+     if(key==e[mid]){
+     printf("Salary Found at index:%d",mid);
+     break ;
+     } else if(key<e[mid]){
+     high = mid-1;
+     } else {
+     low = mid+1 ;
+     }
+}
+if(low>high) {
+printf("%d Salary NOT found.",key) ;
+}
+printf("\nEmployee Salary Search Successfully!\n");
+}
+
+void display() {
+    printf("\nID\tSalary\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d\t%d\n", e[i].ID,e[i].salary);
+    }
+}
+
+int main() {
+
+int choice = 0;
+while (choice != 6) {
+        printf("\n------ Employee Details ------\n");
+        printf("1. Insert Details\n2. Search ID\n3. Search Salary\n4. Display Details\n5. Exit program\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                insert_empinfo();
+                break;
+            case 2:
+                void ID_search();
+                break;
+            case 3:
+               void salary_search();
+                break;
+            case 4:
+                display();
+                break;
+            case 5:
+                printf("\nExit the program!\n");
+                break;
+            default:
+                printf("Invalid choice\n");
+        }
+    }
+
+return 0 ;
+}
