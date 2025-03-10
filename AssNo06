@@ -41,7 +41,6 @@ void ID_search() {
     }
 
     printf("ID %d NOT found.\n", key);
-    printf("Employee ID Search Completed!\n");
 }
 
 void salary_search() {
@@ -64,7 +63,6 @@ void salary_search() {
     }
 
     printf("Salary %d NOT found.\n", key);
-    printf("Employee Salary Search Completed!\n");
 }
 
 void display() {
