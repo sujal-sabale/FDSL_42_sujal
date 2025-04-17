@@ -1,0 +1,70 @@
+#include <stdio.h>
+#define MAX 30
+#define postfixsize 30
+
+int stack[MAX];
+int top = -1;
+
+void push(int item) {
+    if (top >= MAX - 1) {
+        printf("Stack is Full\n");
+    } else {
+        top++;
+        stack[top] = item;
+    }
+}
+
+int pop() {
+    if (top < 0) {
+        printf("Stack Empty\n");
+        return -1; 
+    } else {
+        return stack[top--];
+    }
+}
+
+void EvaluatePostfix(char postfix[]) {
+    int i, value, op1, op2;
+    char ch;
+    for (i = 0; postfix[i] != ')'; i++) {
+        ch = postfix[i];
+        if (isdigit(ch)) {
+            push(ch - '0');
+        } else if (ch == '+' || ch == '-' || ch == '*' || ch == '/') {
+            op1 = pop();
+            op2 = pop();
+
+            switch (ch) {
+            case '*':
+                value = op2 * op1;
+                break;
+            case '/':
+                value = op2 / op1;
+                break;
+            case '+':
+                value = op2 + op1;
+                break;
+            case '-':
+                value = op2 - op1;
+                break;
+            }
+            push(value);
+        }
+    }
+    printf("Result = %d\n", pop());
+}
+
+int main() {
+    int i;
+    char postfix[postfixsize];
+    printf("Enter Postfix Expression & press ')' for end of exp:");
+
+    for (i = 0; i <= postfixsize - 1; i++) {
+        scanf("%c", &postfix[i]);
+        if (postfix[i] == ')') {
+            break;
+        }
+    }
+    EvaluatePostfix(postfix);
+    return 0;
+}
