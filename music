@@ -1,80 +1,79 @@
 #include <stdio.h>
-#include <string.h> 
+#include <string.h>
+
 #define SIZE 5
-int queue[SIZE];
 
-int front = -1;
-int rear = -1;
+struct Song {
+    int id;
+    char name[100];
+};
 
-void enQueue(char name) {
-    if (rear == -1 && front == -1) {  
-        rear = 0;
-        front = 0;
-        queue[rear] = name;
-    } else if ((rear + 1) % SIZE == front) {
+struct Song queue[SIZE];
+int front = -1, rear = -1;
+
+void enQueue(struct Song s) {
+    if ((rear + 1) % SIZE == front) {
         printf("Playlist is full!\n");
+    }
+    if (front == -1 && rear == -1) {
+        front = rear = 0;
+        queue[rear] = s;
+        printf("Added: %s to ID: %d\n", s.name, s.id);
     } else {
         rear = (rear + 1) % SIZE;
-        queue[rear] = name;
+        queue[rear] = s;
+        printf("Added: %s to ID: %d\n", s.name, s.id);
     }
 }
 
 void deQueue() {
-    if (rear == -1 && front == -1) {       
-        printf("Playlist is Empty!\n");
-    } else if (rear == front) { 
-        printf("%s song deleted\n", queue[front]);
-        rear = -1;
-        front = -1;
-    } else {       
-        printf("%s Song Deleted\n", queue[front]);
+    if (front == -1 && rear == -1) {
+        printf("Playlist is empty!\n");
+    }
+    else if (front == rear) {
+        printf("Deleted: %s (ID: %d)\n", queue[front].name, queue[front].id);
+        front = rear = -1;
+    } else {
+        printf("Deleted: %s (ID: %d)\n", queue[front].name, queue[front].id);
         front = (front + 1) % SIZE;
     }
 }
 
 void display() {
-    if (rear == -1 && front == -1) { 
-        printf("Playlist is Empty!\n");
-    } else {
-        printf("Songs in playlist:\n");
-        int i = front;
-        while (i != rear) {
-            printf("%s ", queue[i]);
-            i = (i + 1) % SIZE;
-        }
-        printf("%s\n", queue[rear]); 
+    if (front == -1 && rear == -1) {
+        printf("Playlist is empty!\n");
     }
+    printf("Playlist:\n");
+    int i = front;
+    while (i != rear) {
+        printf("ID: %d, Name: %s\n", queue[i].id, queue[i].name);
+        i = (i + 1) % SIZE;
+    }
+    printf("ID: %d, Name: %s\n", queue[rear].id, queue[rear].name);
 }
 
 int main() {
-    int name;
     int choice;
-    while(1) {
-        printf("\n-----MUSIC PLAYER-----\n");
-        printf("1. Add Song\n");
-        printf("2. Delet Song\n");
-        printf("3. Show Playlist\n");
-        printf("4. Exit\n");
-        printf("Enter Your Choice: ");
+    struct Song s;
+
+    while (1) {
+        printf("\n1. Add Song\n2. Delete Song\n3. Show Playlist\n4. Exit\nChoose: ");
         scanf("%d", &choice);
 
-        switch (choice) {
-        case 1:
-            printf("Enter a Song ID: ");
-            scanf("%s", &name);
-            enQueue(name);
-            break;
-        case 2:
+        if (choice == 1) {
+            printf("Enter Song ID: ");
+            scanf("%d", &s.id);
+            printf("Enter Song Name : ");
+            scanf(" %[^\n]", s.name);
+            enQueue(s);
+        } else if (choice == 2) {
             deQueue();
-            break;
-        case 3:
+        } else if (choice == 3) {
             display();
+        } else if (choice == 4) {
             break;
-        case 4:
-            printf("Exiting the program.\n");
-            return 0;
-        default:
-            printf("Invalid Choice!\n");
+        } else {
+            printf("Invalid choice!\n");
         }
     }
 
