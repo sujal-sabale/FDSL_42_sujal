@@ -2,50 +2,49 @@
 #include <stdlib.h>
 
 struct node {
-    int data ;
-    struct node *next ;
-} ;
+    int data;
+    struct node *next;
+};
 
-struct node *newnode, *front, *rear, *temp ;
-rear = front = NULL ;
+struct node *newnode, *front = NULL, *rear = NULL, *temp;
+
 void enQueue() {
-    temp = rear ;
-    newnode = malloc(sizeof(struct node)) ;
-    printf("Enter a Data for newnode:") ;
-    scanf("%d",&newnode->data) ;
+    newnode = malloc(sizeof(struct node));
+    printf("Enter data for new node: ");
+    scanf("%d", &newnode->data);
+    newnode->next = NULL;
 
-    if(rear == NULL) {
-        rear = newnode ;
-        newnode->next = NULL ;
+    if (rear == NULL) {
+        front = rear = newnode; 
     } else {
-        while(temp->next != NULL) {
-            temp = temp->next ;
-        }
-        temp->next = newnode ;
-        newnode->next = NULL ;
+        rear->next = newnode;   
+        rear = newnode;         
     }
-    printf("Data Inserted Succesfully!") ;
+    printf("Data inserted successfully!\n");
 }
 
 void deQueue() {
     if (front == NULL) {
-        printf("Stack is Empty!\n");
+        printf("Queue is empty!\n");
     } else {
-        temp = front ;
+        temp = front;
         front = front->next;
-        temp->next = NULL;
         free(temp);
+
+        if (front == NULL) {
+            rear = NULL;  
+        }
+
+        printf("Data deleted successfully!\n");
     }
-    printf("Data Deleted Succesfully!") ;
 }
 
 void display() {
-    temp = front ;
-
-    if(front == NULL && rear == NULL) {
-        printf("Queue is Empty!") ;
+    if (front == NULL) {
+        printf("Queue is empty!\n");
     } else {
-        printf("\nQueue Data\n");
+        printf("\nQueue Data:\n");
+        temp = front;
         while (temp != NULL) {
             printf("Data: %d\n", temp->data);
             temp = temp->next;
@@ -53,12 +52,12 @@ void display() {
     }
 }
 
-int main () {
+int main() {
     int choice;
 
     do {
         printf("\n1. enQueue\n2. deQueue\n3. Display\n4. Exit\n");
-        printf("Enter Your Choice: ");
+        printf("Enter your choice: ");
         scanf("%d", &choice);
 
         switch (choice) {
@@ -71,14 +70,14 @@ int main () {
             case 3:
                 display();
                 break;
-            case 4: 
+            case 4:
                 printf("Exiting the program.\n");
-                break ;    
+                break;
             default:
-                printf("Invalid Choice!\n");
+                printf("Invalid choice!\n");
         }
 
-    } while (choice != 4); 
+    } while (choice != 4);
 
     return 0;
 }
