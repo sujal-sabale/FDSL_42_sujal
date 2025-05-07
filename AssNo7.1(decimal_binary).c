@@ -1,14 +1,14 @@
 #include <stdio.h>
-int stack[20] ; // for storing binary number
-int top=-1; // initally stack iis empty, then declare top equal to -1
+int stack[20] ; 
+int top=-1; 
 
-void push(int value) {  // push the element into the stack
-    top++ ;  // increment top value by 1
-    stack[top]=value ; // store the top element of stack into the variable value 
+void push(int value) {  
+    top++ ;  
+    stack[top]=value ; 
 } 
 
-void pop() {   // pop function to delete the top value of stack
-    top-- ;  // decrement the top value by 1
+void pop() {   
+    top-- ; 
 }
 
 void decimalToBinary(int num) { 
@@ -17,7 +17,7 @@ void decimalToBinary(int num) {
         return ;
     }
     while(num>0) {
-        push(num%2); // push remainder in stack
+        push(num%2); 
         num = num/2 ; 
     }
     while(top!=-1) {
@@ -31,6 +31,6 @@ int main() {
     printf("Enter a Decimal No. to Convert into Binary:");
     scanf("%d",&num) ;
     
-    decimalToBinary(num) ; // function calling
+    decimalToBinary(num) ; 
     return 0 ;
 }
