@@ -2,210 +2,208 @@
 #include <stdlib.h>
 
 struct node {
-int data;
-struct node *next;
-struct node *prev ;
+    int data;
+    struct node *next;
+    struct node *prev;
 };
 
-struct node *head = NULL, *newnode,*temp, *prevnode;
-int pos , count = 0 ,i = 1 ;
+struct node *head = NULL;
 
 void insertAtFirst() {
-newnode = malloc(sizeof(struct node)) ;
+    struct node *newnode = malloc(sizeof(struct node));
+    printf("Enter Data for newnode: ");
+    scanf("%d", &newnode->data);
 
-printf("Enter Data for newnode :") ;
-scanf("%d",&newnode -> data) ;
+    newnode->prev = NULL;
+    newnode->next = head;
 
-if(head == NULL) {
-    head = newnode ;
-    newnode -> next = NULL ;
-    newnode -> prev = NULL ;
-} else {
-    newnode -> next = head ;
-    head -> prev = newnode ;
-    head = newnode ;
-    newnode -> prev = NULL ;
-}
+    if (head != NULL)
+        head->prev = newnode;
 
+    head = newnode;
 }
 
 void insertAtLast() {
-newnode = malloc(sizeof(struct node)) ;
-printf("Enter Data for newnode: ") ;
-scanf("%d",&newnode -> data) ;
+    struct node *newnode = malloc(sizeof(struct node));
+    printf("Enter Data for newnode: ");
+    scanf("%d", &newnode->data);
 
-if(head == NULL) {
-    head = newnode ;
-    newnode -> next = NULL ;
-    newnode -> prev = NULL ;
-} else {
-    temp = head ;
-    while (temp -> next != NULL) {
-        temp = temp -> next ;
+    newnode->next = NULL;
+
+    if (head == NULL) {
+        newnode->prev = NULL;
+        head = newnode;
+    } else {
+        struct node *temp = head;
+        while (temp->next != NULL)
+            temp = temp->next;
+
+        temp->next = newnode;
+        newnode->prev = temp;
     }
-    newnode -> next = NULL ;
-    temp -> next = newnode ;
-    newnode -> prev = temp ;
-}
-
 }
 
 void insertAtpos() {
-newnode = malloc(sizeof(struct node)) ;
-printf("Enter Data for newnode:") ;
-scanf("%d",&newnode -> data) ;
+    int pos, count = 0;
+    struct node *temp = head;
+    struct node *newnode = malloc(sizeof(struct node));
 
-printf("Enter position:") ;
-scanf("%d",&pos) ;
+    printf("Enter Data for newnode: ");
+    scanf("%d", &newnode->data);
 
-if(head == NULL) {
-    head = newnode ;
-    newnode -> next = NULL ;
-    newnode -> prev = NULL ;
-} else {
-    count = 0 ;
-    temp = head ;
-    while(temp -> next != NULL) {
-        temp = temp -> next ;
-        count++ ;
+    printf("Enter position: ");
+    scanf("%d", &pos);
+
+    while (temp != NULL) {
+        count++;
+        temp = temp->next;
     }
 
-if(pos < 1 || pos > count) {
-    printf("Invalid Position") ;
-} else {
-    temp = head ;
-    while (i < pos) {
-        prevnode = temp ;
-        temp = temp -> next ;
-        i++ ;
+    if (pos < 1 || pos > count + 1) {
+        printf("Invalid Position\n");
+        free(newnode);
+        return;
     }
-    newnode -> next = temp ;
-    temp -> prev = newnode ;
-    prevnode -> next = newnode ;
-    newnode -> prev = prevnode ;
 
-}
+    if (pos == 1) {
+        newnode->prev = NULL;
+        newnode->next = head;
+        if (head != NULL)
+            head->prev = newnode;
+        head = newnode;
+    } else {
+        temp = head;
+        for (int i = 1; i < pos - 1; i++)
+            temp = temp->next;
+
+        newnode->next = temp->next;
+        newnode->prev = temp;
+
+        if (temp->next != NULL)
+            temp->next->prev = newnode;
+
+        temp->next = newnode;
+    }
 }
 
+void deleteFirst() {
+    if (head == NULL) {
+        printf("DLL is Empty!\n");
+    } else {
+        struct node *temp = head;
+        head = head->next;
 
-}
+        if (head != NULL)
+            head->prev = NULL;
 
-void deleteFirst () {
-if(head == NULL) {
-printf("DLL is Empty!") ;
-} else if (head -> next == NULL) {
-temp = head ;
-head = NULL ;
-free(temp) ;
-} else {
-temp = head ;
-head -> prev = NULL ;
-temp -> next = NULL ;
-free(temp) ;
-}
+        free(temp);
+    }
 }
 
 void deleteLast() {
-temp = head ;
-while (temp -> next != NULL) {
-prevnode = temp ;
-temp = temp -> next ;
-}
-if(head == NULL) {
-printf("DLL is Empty !") ;
-} else if (temp == head) {
-head = NULL ;
-free(temp) ;
-} else {
-prevnode -> next = NULL ;
-temp -> prev = NULL ;
-free(temp) ;
-}
+    if (head == NULL) {
+        printf("DLL is Empty!\n");
+        return;
+    }
+
+    struct node *temp = head;
+
+    if (temp->next == NULL) {
+        head = NULL;
+        free(temp);
+    } else {
+        while (temp->next != NULL)
+            temp = temp->next;
+
+        temp->prev->next = NULL;
+        free(temp);
+    }
 }
 
 void deleteAtPos() {
-printf("Enter the Position:") ;
-scanf("%d",&pos) ;
+    int pos, count = 0;
+    struct node *temp = head;
 
+    printf("Enter the Position: ");
+    scanf("%d", &pos);
 
-temp = head ;
-while(temp -> next != NULL) {
-    temp = temp ->next ;
-}
-if (pos<1 || pos>count) {
-    printf("Invalid Position") ;
-} else if(pos == 1) {
-    deleteFirst () ;
-} else if(pos == count) {
-    deleteLast() ;
-} else {
-    temp = head ;
-    while (i<pos) {
-        prevnode = temp ;
-        temp = temp -> next ;
-        i++ ;
+    while (temp != NULL) {
+        count++;
+        temp = temp->next;
     }
-    prevnode -> next = temp -> next ;
-    temp -> next -> prev = prevnode ;
-    temp -> prev = NULL ;
-    temp -> next = NULL ;
-    free(temp) ;
+
+    if (pos < 1 || pos > count) {
+        printf("Invalid Position\n");
+        return;
+    }
+
+    if (pos == 1) {
+        deleteFirst();
+    } else if (pos == count) {
+        deleteLast();
+    } else {
+        temp = head;
+        for (int i = 1; i < pos; i++)
+            temp = temp->next;
+
+        temp->prev->next = temp->next;
+        temp->next->prev = temp->prev;
+        free(temp);
+    }
 }
 
-}
+void display() {
+    if (head == NULL) {
+        printf("DLL is Empty!\n");
+        return;
+    }
 
-void display () {
-if(head == NULL) {
-printf("DLL is Empty !") ;
-}
-temp = head ;
-printf("\nDLL Data\n") ;
-while(temp != NULL) {
-printf("%d ",temp->data) ;
-temp = temp -> next ;
-}
-printf("\n") ;
-
+    struct node *temp = head;
+    printf("\nDLL Data: ");
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
 }
 
 int main() {
-int choice;
+    int choice;
 
-do {
-    printf("\n1. Insert at First\n2. Insert At Last\n3. insert At Position\n4. Delete At First\n5. Delete At Last\n6. Delete At Position\n7. Display\n8. Exit\n");
-    printf("Enter Your Choice: ");
-    scanf("%d", &choice);
+    do {
+        printf("\n1. Insert at First\n2. Insert At Last\n3. Insert At Position\n4. Delete At First\n5. Delete At Last\n6. Delete At Position\n7. Display\n8. Exit\n");
+        printf("Enter Your Choice: ");
+        scanf("%d", &choice);
 
-    switch (choice) {
-        case 1:
-            insertAtFirst();
-            break;
-        case 2:
-            insertAtLast();
-            break;
-        case 3:
-            insertAtpos() ;
-            break ;
-        case 4:
-            deleteFirst();
-            break;
-        case 5:
-            deleteLast();
-            break;
-        case 6:
-            deleteAtPos() ;
-            break ;
-        case 7:
-            display() ;
-            break;
-        case 8: 
-            printf("Exiting the program.\n");
-            break ;    
-        default:
-            printf("Invalid Choice!\n");
-    }
+        switch (choice) {
+            case 1:
+                insertAtFirst();
+                break;
+            case 2:
+                insertAtLast();
+                break;
+            case 3:
+                insertAtpos();
+                break;
+            case 4:
+                deleteFirst();
+                break;
+            case 5:
+                deleteLast();
+                break;
+            case 6:
+                deleteAtPos();
+                break;
+            case 7:
+                display();
+                break;
+            case 8:
+                printf("Exiting the program.\n");
+                break;
+            default:
+                printf("Invalid Choice!\n");
+        }
+    } while (choice != 8);
 
-} while (choice != 8); 
-
-return 0;
-} 
+    return 0;
+}
