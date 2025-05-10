@@ -31,8 +31,8 @@ void pop() {
         top = top->next;
         temp->next = NULL;
         free(temp);
+        printf("Data Deleted Succesfully!") ;
     }
-    printf("Data Deleted Succesfully!") ;
 }
 
 void display() {
